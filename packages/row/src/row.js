@@ -1,13 +1,15 @@
 export default {
   name: 'ElRow',
 
-  componentName: 'ElRow',
+  componentName: 'ElRow', // 组件名
 
   props: {
+    // render函数调用的时候用到，创建的时候可根据用户传入的标签名创建，默认采用div
     tag: {
       type: String,
       default: 'div'
     },
+    // row里面的col之间的距离
     gutter: Number,
     type: String,
     justify: {
