@@ -2,10 +2,12 @@ export default {
   name: 'ElCol',
 
   props: {
+    // 默认占满全部，即24
     span: {
       type: Number,
       default: 24
     },
+    // col渲染成的标签，默认div
     tag: {
       type: String,
       default: 'div'
@@ -23,6 +25,7 @@ export default {
   computed: {
     gutter() {
       let parent = this.$parent;
+      // 找到当前组件的上一层el-row组件为止
       while (parent && parent.$options.componentName !== 'ElRow') {
         parent = parent.$parent;
       }
@@ -32,7 +35,12 @@ export default {
   render(h) {
     let classList = [];
     let style = {};
-
+    /**
+     * 配合el-row组件的gutter进行设置
+     * 比如el-row的gutter设置为20px
+     * 那么row左右有个margin10px
+     * col的左右也会有个padding10px
+    */
     if (this.gutter) {
       style.paddingLeft = this.gutter / 2 + 'px';
       style.paddingRight = style.paddingLeft;

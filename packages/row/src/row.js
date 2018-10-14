@@ -31,6 +31,7 @@ export default {
       /**
        * 如果设置了栅格距离，通过设置左右的margin值来实现宽度扩张，
        * 因为col是左右设置padding的，row左右需要增加宽度
+       * 需要与el-col联系联系起来看，因为col组件里也会获取父组件的gutter
        *  */
       if (this.gutter) {
         ret.marginLeft = `-${this.gutter / 2}px`;
