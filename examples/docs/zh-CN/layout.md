@@ -274,6 +274,25 @@
   <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
   <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
 </el-row>
+<div>align(align 表示row中元素垂直方向上的对齐方式,通过设置align-items):</div>
+<el-row type="flex" class="row-bg" align="top">
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <div style="background:red;">top</div>
+</el-row>
+<el-row type="flex" class="row-bg" align="middle">
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <div style="background:red;">middle</div>
+</el-row>
+<el-row type="flex" class="row-bg" align="bottom">
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <div style="background:red;">bottom</div>
+</el-row>
 
 <style>
   .el-row {

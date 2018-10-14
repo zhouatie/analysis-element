@@ -18,6 +18,7 @@ export default {
       type: String,
       default: 'start'
     },
+    // align 表示row中元素垂直方向上的对齐方式,通过设置align-items
     align: {
       type: String,
       default: 'top'
@@ -27,7 +28,10 @@ export default {
   computed: {
     style() {
       const ret = {};
-
+      /**
+       * 如果设置了栅格距离，通过设置左右的margin值来实现宽度扩张，
+       * 因为col是左右设置padding的，row左右需要增加宽度
+       *  */
       if (this.gutter) {
         ret.marginLeft = `-${this.gutter / 2}px`;
         ret.marginRight = ret.marginLeft;
