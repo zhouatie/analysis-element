@@ -362,8 +362,22 @@
 
 :::demo
 ```html
-<el-row :gutter="10">
+<el-row>
   <el-col><div class="grid-content bg-purple">333</div></el-col>
+</el-row>
+<div>offset: 栅格左侧的间隔格数</div>
+<el-row>
+  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+  <el-col :offset="1" :span="5"><div class="grid-content bg-purple">offset1 span=5</div></el-col>
+  <el-col :offset="2" :span="4"><div class="grid-content bg-purple-light">offset2 span4</div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+<div>push: 栅格向右移动格数(使用了position:relative定位)</div>
+<div>pull: 栅格向左移动格数(使用了position:relative定位)</div>
+<el-row>
+  <el-col :push="2" :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :pull="2" :span="6"><div class="grid-content bg-purple-light"></div></el-col>
 </el-row>
 
 <style>

@@ -46,6 +46,11 @@ export default {
       style.paddingRight = style.paddingLeft;
     }
 
+    /**
+     * 通过添加class来设置元素的样式，先将class存进数组中
+     * push:栅格向右移动格数
+     * pull:栅格向左移动格数
+     *  */
     ['span', 'offset', 'pull', 'push'].forEach(prop => {
       if (this[prop] || this[prop] === 0) {
         classList.push(
@@ -56,6 +61,7 @@ export default {
       }
     });
 
+    // 设置响应式布局的class
     ['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       if (typeof this[size] === 'number') {
         classList.push(`el-col-${size}-${this[size]}`);
