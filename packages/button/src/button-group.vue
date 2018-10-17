@@ -1,4 +1,5 @@
 <template>
+  <!-- 按钮组 -->
   <div class="el-button-group">
     <slot></slot>
   </div>
