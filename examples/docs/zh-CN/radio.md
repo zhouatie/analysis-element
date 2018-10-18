@@ -2,6 +2,7 @@
   module.exports = {
     data() {
       return {
+        radio0: '1',
         radio: '1',
         radio1: '选中且禁用',
         radio2: 3,
@@ -21,6 +22,27 @@
 ## Radio 单选框
 
 在一组备选项中进行单选
+
+### 源码分析调试专用
+
+:::demo
+```html
+<template>
+  <el-radio v-model="radio0" label="1"></el-radio>
+  <el-radio v-model="radio0" label="2"></el-radio>
+</template>
+
+<script>
+  export default {
+    data () {
+      return {
+        radio0: '1'
+      };
+    }
+  }
+</script>
+```
+:::
 
 ### 基础用法
 
