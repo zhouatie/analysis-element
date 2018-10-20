@@ -64,6 +64,10 @@
       }
     },
     methods: {
+      /**
+       * 获取当前选中目标的在radio数组中的序列号
+       * 通过序列号的增减来获取下一个radio触发他的click跟focus事件
+       *  */
       handleKeydown(e) { // 左右上下按键 可以在radio组内切换不同选项
         const target = e.target;
         const className = target.nodeName === 'INPUT' ? '[type=radio]' : '[role=radio]';
