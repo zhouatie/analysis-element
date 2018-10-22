@@ -34,7 +34,7 @@
       size: String, // group组件的size尺寸
       fill: String, // 用于子组件按钮显示的radio-button激活时的填充色和边框色
       textColor: String, // 按钮形式的 Radio 激活时的文本颜色
-      disabled: Boolean //是否禁止
+      disabled: Boolean // 是否禁止
     },
 
     computed: {
@@ -50,6 +50,10 @@
 
     created() {
       // TODO:了解下$on的原理
+      /**
+       * 监听当前实例上的自定义事件
+       * 事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。
+       *  */
       this.$on('handleChange', value => {
         this.$emit('change', value);
       });
@@ -107,6 +111,7 @@
     },
     watch: {
       value(value) {
+        // TODO: 'el.form.change'看下源码，这个写法
         this.dispatch('ElFormItem', 'el.form.change', [this.value]);
       }
     }

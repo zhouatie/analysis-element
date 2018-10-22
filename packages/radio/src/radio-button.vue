@@ -41,7 +41,11 @@
     name: 'ElRadioButton',
 
     mixins: [Emitter],
-
+    /**
+     * 注入由父组件provide下去的对象，
+     * 这里elForm值是elForm组件传递的this对象，
+     * 这里elFormItem值是elFormItem组件传递的this对象
+     */
     inject: {
       elForm: {
         default: ''
@@ -52,16 +56,21 @@
     },
 
     props: {
-      label: {},
-      disabled: Boolean,
+      label: {}, // 当slot没有传递时，默认展示label字段作为按钮文本
+      disabled: Boolean, // 控制表单禁用
       name: String
     },
     data() {
       return {
-        focus: false
+        focus: false // 这里只用于控制is-focus的显示与隐藏
       };
     },
     computed: {
+      /**
+       * radio-button都是以group显示存在
+       * 所以get的时候直接返回父组件ElRadioGroup的value值，
+       * 如果要修改值，也是$meit父组件ElRadioGroup的input事件
+       *  */
       value: {
         get() {
           return this._radioGroup.value;
@@ -70,6 +79,9 @@
           this._radioGroup.$emit('input', value);
         }
       },
+      /**
+       * 递归返回父组件ElRadioGroup
+       *  */
       _radioGroup() {
         let parent = this.$parent;
         while (parent) {
@@ -95,6 +107,7 @@
       size() {
         return this._radioGroup.radioGroupSize || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
+      // 先判断自己的disabled属性，再层层往上找，只要找到一个true，则为true
       isDisabled() {
         return this.disabled || this._radioGroup.disabled || (this.elForm || {}).disabled;
       },
@@ -106,6 +119,7 @@
     methods: {
       handleChange() {
         this.$nextTick(() => {
+          // 触发父组件ElRadioGroup的handleChange事件
           this.dispatch('ElRadioGroup', 'handleChange', this.value);
         });
       }

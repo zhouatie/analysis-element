@@ -31,6 +31,7 @@ export default {
       }
       if (parent) {
         // 触发父组件上挂载的eventName事件
+        // TODO: 这个eventName可以为'el.form.change',需要去vue源码中查看
         parent.$emit.apply(parent, [eventName].concat(params));
       }
     },
