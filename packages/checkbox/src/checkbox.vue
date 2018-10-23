@@ -61,11 +61,12 @@
     name: 'ElCheckbox',
 
     mixins: [Emitter],
-
+    // 获取父组件elForm provide注入的this
     inject: {
       elForm: {
         default: ''
       },
+    // 获取父组件elFormItem provide注入的this
       elFormItem: {
         default: ''
       }
