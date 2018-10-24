@@ -4,6 +4,7 @@
     data() {
       return {
         checkList: ['选中且禁用','复选框 A'],
+        checkList_test: ['复选框 B'],
         // checkList2: ['复选框 A'],
         checked: true,
         checked1: false,
@@ -44,6 +45,38 @@
 </script>
 ## Checkbox 多选框
 一组备选项中进行多选
+
+### 调试
+
+
+:::demo 
+
+```html
+<template>
+  <!-- `checked` 为 true 或 false -->
+  <el-checkbox v-model="checked" label="label文案"></el-checkbox>
+  <el-checkbox v-model="checked">slot文案</el-checkbox>
+  <el-checkbox v-model="checked" :indeterminate="true">indeterminate:true</el-checkbox>
+  <el-checkbox-group v-model="checkList_test">
+    <el-checkbox label="复选框 A"></el-checkbox>
+    <el-checkbox label="复选框 B"></el-checkbox>
+    <el-checkbox label="复选框 C"></el-checkbox>
+    <el-checkbox label="禁用" disabled></el-checkbox>
+    <el-checkbox label="选中且禁用" disabled></el-checkbox>
+  </el-checkbox-group>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        checked: true,
+        checkList_test: ['复选框 B']
+      };
+    }
+  };
+</script>
+```
+:::
 
 ### 基础用法
 

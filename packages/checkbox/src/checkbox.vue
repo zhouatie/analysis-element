@@ -48,6 +48,7 @@
         @focus="focus = true"
         @blur="focus = false">
     </span>
+    <!-- 当slot没有内容时，会显示label作为这个checkbox的文本 -->
     <span class="el-checkbox__label" v-if="$slots.default || label">
       <slot></slot>
       <template v-if="!$slots.default">{{label}}</template>
@@ -66,7 +67,7 @@
       elForm: {
         default: ''
       },
-    // 获取父组件elFormItem provide注入的this
+      // 获取父组件elFormItem provide注入的this
       elFormItem: {
         default: ''
       }
@@ -119,34 +120,41 @@
           return this.model === this.trueLabel;
         }
       },
-
+      // 判断是否为组合表单
       isGroup() {
         let parent = this.$parent;
         while (parent) {
           if (parent.$options.componentName !== 'ElCheckboxGroup') {
             parent = parent.$parent;
           } else {
+            // 将组合表单父组件赋值给_checkboxGroup
             this._checkboxGroup = parent;
             return true;
           }
         }
         return false;
       },
-
+      // return表单的值，若为组合表单，返回组合表单的value
       store() {
         return this._checkboxGroup ? this._checkboxGroup.value : this.value;
       },
-
+      /**
+       * 判断是否为组合表单
+       * 1.如果是组合表单，先获取父组件的disabled元素、自身的disabled，最后获取elForm
+       * 2.如果不是组合表单，先获取自身的disabled，最后获取elForm
+       *  */
       isDisabled() {
         return this.isGroup
           ? this._checkboxGroup.disabled || this.disabled || (this.elForm || {}).disabled
           : this.disabled || (this.elForm || {}).disabled;
       },
-
+      // 返回继承elFormItem的size，这里做容错处理
       _elFormItemSize() {
         return (this.elFormItem || {}).elFormItemSize;
       },
-
+      /**
+       * checkbox的size先根据自身size、再_elFormItemSize、再全局的$ELEMENT设置的size判断
+       *  */
       checkboxSize() {
         const temCheckboxSize = this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
         return this.isGroup
@@ -156,21 +164,23 @@
     },
 
     props: {
-      value: {},
-      label: {},
+      value: {}, // v-model绑定到input表单上，实际可拆分成:value 与 @input 结合体
+      label: {}, // label文本
       indeterminate: Boolean,
       disabled: Boolean,
       checked: Boolean,
       name: String,
-      trueLabel: [String, Number],
-      falseLabel: [String, Number],
+      trueLabel: [String, Number], // 选中时的值
+      falseLabel: [String, Number], // 没有选中时的值
       id: String, /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/
       controls: String, /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/
-      border: Boolean,
+      border: Boolean, // 是否显示边框
       size: String
     },
 
     methods: {
+      /**
+       *  */
       addToStore() {
         if (
           Array.isArray(this.model) &&
@@ -202,13 +212,17 @@
       this.checked && this.addToStore();
     },
     mounted() { // 为indeterminate元素 添加aria-controls 属性
+      // indeterminate 属性用以表示 checkbox 的不确定状态，一般用于实现全选的效果
       if (this.indeterminate) {
+        // TODO: controls什么作用
         this.$el.setAttribute('aria-controls', this.controls);
       }
     },
 
     watch: {
       value(value) {
+        console.log(value, 'value');
+        // 通知ElFormItem组件，表单值change
         this.dispatch('ElFormItem', 'el.form.change', value);
       }
     }
