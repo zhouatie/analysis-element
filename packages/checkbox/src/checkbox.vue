@@ -22,6 +22,7 @@
        aria-checked="mixed"
     >
       <span class="el-checkbox__inner"></span>
+      <!-- trueLabel/falseLabel 与 label不可共存 -->
       <input
         v-if="trueLabel || falseLabel"
         class="el-checkbox__original"
@@ -77,15 +78,19 @@
 
     data() {
       return {
-        selfModel: false,
-        focus: false,
-        isLimitExceeded: false
+        selfModel: false, // 自己内部定义的model变量
+        focus: false, // 控制表单是否focus
+        isLimitExceeded: false // 控制是否超过最大值最小值的Boolean
       };
     },
 
     computed: {
       model: {
         get() {
+          /**
+           * 是分组checkbox-group的直接拿group的值，没有的拿checkbox绑定的v-model值，
+           * 如果也没有，就用自身默认的selfModel: false;
+           *  */
           return this.isGroup
             ? this.store : this.value !== undefined
               ? this.value : this.selfModel;
@@ -93,6 +98,7 @@
 
         set(val) {
           if (this.isGroup) {
+            // ========= 控制isLimitExceeded变量的开关 === start ====
             this.isLimitExceeded = false;
             (this._checkboxGroup.min !== undefined &&
               val.length < this._checkboxGroup.min &&
@@ -101,7 +107,9 @@
             (this._checkboxGroup.max !== undefined &&
               val.length > this._checkboxGroup.max &&
               (this.isLimitExceeded = true));
+            // ========= 控制isLimitExceeded变量的开关 === end ====
 
+            // 当状态为false的时候表示没有超过限制，允许修改
             this.isLimitExceeded === false &&
             this.dispatch('ElCheckboxGroup', 'input', [val]);
           } else {
@@ -113,8 +121,10 @@
 
       isChecked() {
         if ({}.toString.call(this.model) === '[object Boolean]') {
+          // 如果checkbox布尔值，直接返回该布尔值
           return this.model;
         } else if (Array.isArray(this.model)) {
+          // 如果是个数组，判断当前label是否在数组中
           return this.model.indexOf(this.label) > -1;
         } else if (this.model !== null && this.model !== undefined) {
           return this.model === this.trueLabel;
@@ -180,6 +190,8 @@
 
     methods: {
       /**
+       * 总的作用就是如果设置了checked为true，校正绑定的v-model数据
+       * 1.model不是数组，将为true时的label =>trueLabel赋值给model，没有则赋值true
        *  */
       addToStore() {
         if (
@@ -188,6 +200,11 @@
         ) {
           this.model.push(this.label);
         } else {
+          /**
+           * FIXME: Element-ui的bug 不严谨
+           * 场景：Array.isArray(this.model) 为true，trueLabel与label同时存在时，数组会被赋值为trueLabel
+           * 组合型checkbox，不允许有trueLabel出现，否则点不动
+           *  */
           this.model = this.trueLabel || true;
         }
       },
@@ -209,6 +226,7 @@
     },
 
     created() {
+      // 如果该checkbox的checked为true，校正下model的值
       this.checked && this.addToStore();
     },
     mounted() { // 为indeterminate元素 添加aria-controls 属性
@@ -221,7 +239,6 @@
 
     watch: {
       value(value) {
-        console.log(value, 'value');
         // 通知ElFormItem组件，表单值change
         this.dispatch('ElFormItem', 'el.form.change', value);
       }
