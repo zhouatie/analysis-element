@@ -114,6 +114,7 @@
             this.dispatch('ElCheckboxGroup', 'input', [val]);
           } else {
             this.$emit('input', val);
+            // 如果不是以组的形式存在的checkbox，会更新私有的model，即selfModel
             this.selfModel = val;
           }
         }

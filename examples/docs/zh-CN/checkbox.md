@@ -57,7 +57,7 @@
 ```html
 <template>
   <!-- `checked` 为 true 或 false -->
-  <el-checkbox v-model="checked" true-label="HAHA" label="label文案"></el-checkbox>
+  <el-checkbox v-model="checked" label="label文案"></el-checkbox>
   <el-button @click="handleConsole">console</el-button>
   <el-checkbox v-model="checked">slot文案</el-checkbox>
   <el-checkbox v-model="checked" :indeterminate="true">indeterminate:true</el-checkbox>
