@@ -108,21 +108,23 @@
           } else if (this.value !== undefined) {
             this.$emit('input', val);
           } else {
+            // TODO:为什么checkbox是跟上面input事件一起的，这里不是
             this.selfModel = val;
           }
         }
       },
-
+      // 表示是否选中的属性
       isChecked() {
         if ({}.toString.call(this.model) === '[object Boolean]') {
           return this.model;
         } else if (Array.isArray(this.model)) {
           return this.model.indexOf(this.label) > -1;
         } else if (this.model !== null && this.model !== undefined) {
+          // TODO:加入存在label，trueLabel没写怎么办
           return this.model === this.trueLabel;
         }
       },
-
+      // 组合组件checkboxGroup，不存在返回false
       _checkboxGroup() {
         let parent = this.$parent;
         while (parent) {
@@ -134,11 +136,11 @@
         }
         return false;
       },
-
+      // 返回 表单的值，如果存在组合组件，返回父组件checkboxGroup的value值
       store() {
         return this._checkboxGroup ? this._checkboxGroup.value : this.value;
       },
-
+      // 返回激活时的样式对象
       activeStyle() {
         return {
           backgroundColor: this._checkboxGroup.fill || '',
@@ -148,15 +150,15 @@
 
         };
       },
-
+      // 返回父组件elFormItem上绑定的size
       _elFormItemSize() {
         return (this.elFormItem || {}).elFormItemSize;
       },
-
+      // 返回表单该显示的size
       size() {
         return this._checkboxGroup.checkboxGroupSize || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
-
+      // 表单禁止属性
       isDisabled() {
         return this._checkboxGroup
           ? this._checkboxGroup.disabled || this.disabled || (this.elForm || {}).disabled
@@ -164,6 +166,10 @@
       }
     },
     methods: {
+      /**
+       * created()的时候如果组件上的checked为true时候，会调用此方法
+       * 此方法的作用：校正绑定的model值
+       *  */
       addToStore() {
         if (
           Array.isArray(this.model) &&
@@ -171,6 +177,11 @@
         ) {
           this.model.push(this.label);
         } else {
+          /**
+           * FIXME: Element-ui的bug 不严谨
+           * 场景：Array.isArray(this.model) 为true，trueLabel与label同时存在时，数组会被赋值为trueLabel
+           * 组合型checkbox，不允许有trueLabel出现，否则点不动
+           *  */
           this.model = this.trueLabel || true;
         }
       },
