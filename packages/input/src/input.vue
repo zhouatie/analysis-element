@@ -1,4 +1,7 @@
 <template>
+  <!-- 
+    type: el-input 可以为input 也可以为 textarea
+  -->
   <div :class="[
     type === 'textarea' ? 'el-textarea' : 'el-input',
     inputSize ? 'el-input--' + inputSize : '',
@@ -14,11 +17,17 @@
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
   >
+  <!-- 当type为input的时候 -->
     <template v-if="type !== 'textarea'">
       <!-- 前置元素 -->
       <div class="el-input-group__prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
       </div>
+      <!-- 
+        包含了父作用域中不被认为 (且不预期为) props 的特性绑定 (class 和 style 除外)。
+        当一个组件没有声明任何 props 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，
+        并且可以通过 v-bind=”$attrs” 传入内部组件——在创建更高层次的组件时非常有用。 
+      -->
       <input
         :tabindex="tabindex"
         v-if="type !== 'textarea'"
