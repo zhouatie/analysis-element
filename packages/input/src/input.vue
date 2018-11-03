@@ -24,7 +24,7 @@
         <slot name="prepend"></slot>
       </div>
       <!-- 
-        包含了父作用域中不被认为 (且不预期为) props 的特性绑定 (class 和 style 除外)。
+        v-bind="$attrs" ：包含了父作用域中不被认为 (且不预期为) props 的特性绑定 (class 和 style 除外)。
         当一个组件没有声明任何 props 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，
         并且可以通过 v-bind=”$attrs” 传入内部组件——在创建更高层次的组件时非常有用。 
       -->
@@ -117,9 +117,13 @@
     name: 'ElInput',
 
     componentName: 'ElInput',
-
+    // 混入emitter，Migrating对象
     mixins: [emitter, Migrating],
-
+    /**
+     * TODO:（https://www.jianshu.com/p/ce8ca875c337）
+     * inheritAttrs：false，组件将不会把未被注册的props呈现为普通的HTML属性。
+     * 但是在组件里我们可以通过其$attrs可以获取到没有使用的注册属性
+     *  */
     inheritAttrs: false,
 
     inject: {
