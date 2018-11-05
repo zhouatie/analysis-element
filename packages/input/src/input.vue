@@ -125,7 +125,7 @@
      * 但是在组件里我们可以通过其$attrs可以获取到没有使用的注册属性
      *  */
     inheritAttrs: false,
-
+    // 父组件elForm，elFormItem传递到该组件的父组件实例对象
     inject: {
       elForm: {
         default: ''
@@ -141,21 +141,21 @@
           ? ''
           : this.value,
         textareaCalcStyle: {},
-        hovering: false,
-        focused: false,
+        hovering: false, // 判断表单是否hover
+        focused: false, // 判断焦点是否触发
         isOnComposition: false,
         valueBeforeComposition: null
       };
     },
 
     props: {
-      value: [String, Number],
-      size: String,
-      resize: String,
-      form: String,
-      disabled: Boolean,
-      readonly: Boolean,
-      type: {
+      value: [String, Number], // v-model相当于 :value 和 @input
+      size: String, // input尺寸
+      resize: String, // textarea是否可resize
+      form: String, // 原生表单属性
+      disabled: Boolean, // 控制表单是否禁止属性
+      readonly: Boolean, // 控制表单是否只读属性
+      type: { // input的原生type类型
         type: String,
         default: 'text'
       },
@@ -163,7 +163,7 @@
         type: [Boolean, Object],
         default: false
       },
-      autocomplete: {
+      autocomplete: { // 原生表单的autocomplete属性
         type: String,
         default: 'off'
       },
