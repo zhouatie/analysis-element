@@ -180,10 +180,10 @@
         type: Boolean,
         default: true
       },
-      suffixIcon: String,
-      prefixIcon: String,
-      label: String,
-      clearable: {
+      suffixIcon: String, // 输入框尾部图标
+      prefixIcon: String, // 输入框头部图标
+      label: String, // 输入框关联的label文字 TODO: 不知道具体什么用
+      clearable: { // 是否显示清除按钮
         type: Boolean,
         default: false
       },
@@ -191,6 +191,7 @@
     },
 
     computed: {
+      // 父组件elFormItem的size
       _elFormItemSize() {
         return (this.elFormItem || {}).elFormItemSize;
       },

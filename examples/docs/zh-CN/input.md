@@ -202,6 +202,42 @@ export default {
 ```
 :::
 
+### 调试用法
+
+:::demo
+```html
+<el-input v-model="input" label="wenzi" placeholder="请输入内容"></el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input: ''
+    }
+  }
+}
+</script>
+```
+:::
+
+### 基础用法
+
+:::demo
+```html
+<el-input v-model="input" placeholder="请输入内容"></el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input: ''
+    }
+  }
+}
+</script>
+```
+:::
+
 
 ### 禁用状态
 
