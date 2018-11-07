@@ -195,12 +195,15 @@
       _elFormItemSize() {
         return (this.elFormItem || {}).elFormItemSize;
       },
+      // 返回该form-item的校验结果
       validateState() {
         return this.elFormItem ? this.elFormItem.validateState : '';
       },
+      // 挂载在el-form上的status-icon，input右边会有个状态图标
       needStatusIcon() {
         return this.elForm ? this.elForm.statusIcon : false;
       },
+      // 验证状态的图标显示
       validateIcon() {
         return {
           validating: 'el-icon-loading',
@@ -208,15 +211,22 @@
           error: 'el-icon-circle-close'
         }[this.validateState];
       },
+      // 返回textarea的style对象
       textareaStyle() {
         return merge({}, this.textareaCalcStyle, { resize: this.resize });
       },
+      // 返回inputSize
       inputSize() {
         return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
+      // 返回控制表单禁止的对象
       inputDisabled() {
         return this.disabled || (this.elForm || {}).disabled;
       },
+      /**
+       * 返回是否显示清除按钮的boolean
+       * 用户传入的clearable为true，且不是禁止、只读、当前值不为空、获得焦点或hover的时候显示
+       *  */
       showClear() {
         return this.clearable &&
           !this.disabled &&
@@ -227,6 +237,7 @@
     },
 
     watch: {
+      // 监听v-model绑定的值变化，来设置input元素的value值
       value(val, oldValue) {
         this.setCurrentValue(val);
       }
@@ -349,6 +360,7 @@
     },
 
     created() {
+      // created钩子触发之后，挂载inputSelect事件
       this.$on('inputSelect', this.select);
     },
 
