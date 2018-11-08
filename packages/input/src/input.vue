@@ -176,6 +176,7 @@
           return true;
         }
       },
+      // TODO: 校验怎么传递下去的？？
       validateEvent: {
         type: Boolean,
         default: true
@@ -244,12 +245,20 @@
     },
 
     methods: {
+      // 触发元素获得焦点
       focus() {
         (this.$refs.input || this.$refs.textarea).focus();
       },
+      // 触发元素失去焦点
       blur() {
         (this.$refs.input || this.$refs.textarea).blur();
       },
+      /**
+       * 主要用途：告诉用户挂载的props或者events已经被移除
+       * mixins挂载中的Migrating对象中mounted
+       * 会获取getMigratingConfig中的props和events
+       * 遍历$vnode中的definedProps与definedEvents
+       *  */
       getMigratingConfig() {
         return {
           props: {
@@ -264,13 +273,15 @@
       handleBlur(event) {
         this.focused = false;
         this.$emit('blur', event);
-        if (this.validateEvent) {
+        if (this.validateEvent) { // 如果需要校验的话，通知ElFormItem触发他的blur事件
           this.dispatch('ElFormItem', 'el.form.blur', [this.currentValue]);
         }
       },
+      // TODO: 这是干啥？
       select() {
         (this.$refs.input || this.$refs.textarea).select();
       },
+      // 重新计算下textarea的高度
       resizeTextarea() {
         if (this.$isServer) return;
         const { autosize, type } = this;
@@ -286,7 +297,9 @@
 
         this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
       },
+      // 触发绑定在该组件的focus方法
       handleFocus(event) {
+        // 内部用于判断焦点的私有变量
         this.focused = true;
         this.$emit('focus', event);
       },
@@ -355,6 +368,7 @@
         this.$emit('change', '');
         this.$emit('clear');
         this.setCurrentValue('');
+        // 值清空后，触发input表单焦点
         this.focus();
       }
     },
