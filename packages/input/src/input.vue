@@ -257,7 +257,8 @@
        * 主要用途：告诉用户挂载的props或者events已经被移除
        * mixins挂载中的Migrating对象中mounted
        * 会获取getMigratingConfig中的props和events
-       * 遍历$vnode中的definedProps与definedEvents
+       * 遍历$vnode中的definedProps与definedEvents(即用户挂载在组件上的)
+       * 如果存在如下选项中的key，console.warn key对应的value警告
        *  */
       getMigratingConfig() {
         return {
