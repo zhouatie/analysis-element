@@ -304,7 +304,11 @@
         this.focused = true;
         this.$emit('focus', event);
       },
+      /**
+       * 作用：防止在中文输入法的时候，拼音输入中也触发input
+       *  */
       handleComposition(event) {
+        console.log(event, event.type);
         if (event.type === 'compositionend') {
           this.isOnComposition = false;
           this.currentValue = this.valueBeforeComposition;
@@ -323,6 +327,7 @@
         const value = event.target.value;
         this.setCurrentValue(value);
         if (this.isOnComposition) return;
+        console.log(value, 'inputpintpus');
         this.$emit('input', value);
       },
       handleChange(event) {
