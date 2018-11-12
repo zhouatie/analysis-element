@@ -323,6 +323,9 @@
           }
         }
       },
+      /**
+       * 作用：防止在中文输入法的时候，拼音输入中也触发input
+       *  */
       handleInput(event) {
         const value = event.target.value;
         this.setCurrentValue(value);
@@ -330,6 +333,7 @@
         console.log(value, 'inputpintpus');
         this.$emit('input', value);
       },
+      // input表单change事件触发，通知到组件上挂载的change事件
       handleChange(event) {
         this.$emit('change', event.target.value);
       },
