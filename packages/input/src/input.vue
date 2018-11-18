@@ -346,6 +346,7 @@
           this.dispatch('ElFormItem', 'el.form.change', [value]);
         }
       },
+      // 计算icon位置
       calcIconOffset(place) {
         let elList = [].slice.call(this.$el.querySelectorAll(`.el-input__${place}`) || []);
         if (!elList.length) return;
