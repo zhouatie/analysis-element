@@ -1,4 +1,5 @@
 <template>
+  <!-- @dragstart.prevent阻止拖拽默认事件 -->
   <div
     @dragstart.prevent
     :class="[
