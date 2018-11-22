@@ -51,7 +51,9 @@
 
   export default {
     name: 'ElInputNumber',
+    // mixin进来的组件作用就是this.$refs['input'].focus();
     mixins: [Focus('input')],
+    // 注入父组件elForm、elFormItem实例的this对象
     inject: {
       elForm: {
         default: ''
@@ -82,6 +84,7 @@
       value: {},
       disabled: Boolean,
       size: String,
+      // 控制按钮，默认为ture，即显示
       controls: {
         type: Boolean,
         default: true
@@ -193,12 +196,14 @@
 
         return this.toPrecision((precisionFactor * val - precisionFactor * step) / precisionFactor);
       },
+      // 增加数字方法
       increase() {
         if (this.inputNumberDisabled || this.maxDisabled) return;
         const value = this.value || 0;
         const newVal = this._increase(value, this.step);
         this.setCurrentValue(newVal);
       },
+      // 减小数字方法
       decrease() {
         if (this.inputNumberDisabled || this.minDisabled) return;
         const value = this.value || 0;
