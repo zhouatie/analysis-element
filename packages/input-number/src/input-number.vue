@@ -62,6 +62,7 @@
         default: ''
       }
     },
+    // 绑定指令抬起鼠标之前每隔100ms执行自定义指令绑定的函数
     directives: {
       repeatClick: RepeatClick
     },
@@ -82,6 +83,7 @@
         default: -Infinity
       },
       value: {},
+      // 禁止控件
       disabled: Boolean,
       size: String,
       // 控制按钮，默认为ture，即显示
@@ -93,8 +95,9 @@
         type: String,
         default: ''
       },
+      // 表单原生name值
       name: String,
-      label: String,
+      label: String, // 输入框关联的label文字
       precision: {
         type: Number,
         validator(val) {
@@ -128,9 +131,11 @@
       }
     },
     computed: {
+      // 最小值限制
       minDisabled() {
         return this._decrease(this.value, this.step) < this.min;
       },
+      // 最大值限制
       maxDisabled() {
         return this._increase(this.value, this.step) > this.max;
       },
